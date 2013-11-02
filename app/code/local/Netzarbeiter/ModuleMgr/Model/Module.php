@@ -381,4 +381,14 @@ class Netzarbeiter_ModuleMgr_Model_Module extends Varien_Object
             self::STATE_UNINSTALLED_REGISTRY_INACTIVE => $helper->__('Inactive in registry, no module config.xml'),
         );
     }
+    
+    /**
+     * Changes module version in database
+     * @param string $version
+     * @return string
+     */
+    public function updateVersion($version)
+    {
+       return $this->getResource()->updateVersion($version, $this->getSetupResourceName());
+    }
 }

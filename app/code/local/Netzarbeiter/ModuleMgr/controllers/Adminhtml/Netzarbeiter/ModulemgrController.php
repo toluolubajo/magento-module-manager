@@ -12,12 +12,31 @@ class Netzarbeiter_ModuleMgr_Adminhtml_Netzarbeiter_ModulemgrController
     public function indexAction()
     {
         $this->_title($this->__('System'))
-                ->_title($this->__('Tools'))
-                ->_title($this->__('Module Manager'));
+            ->_title($this->__('Tools'))
+            ->_title($this->__('Module Manager'));
 
         $this->loadLayout();
         $this->_setActiveMenu('system/tools/netzarbeiter_modulemgr');
         $this->renderLayout();
+    }
+
+    /**
+     * Changes the version of a module in the database
+     */
+    public function saveAction()
+    {
+        $version    = $this->getRequest()->getParam('version', false);
+        $id         = $this->getRequest()->getParam('id', false);
+        $module     = Mage::getModel('netzarbeiter_modulemgr/module')->loadByModuleName($id);
+        if ($module) {
+            $module->updateVersion($version);
+            Mage::getSingleton('adminhtml/session')->addSuccess(
+                Mage::helper('adminhtml')->__(
+                    'Succesfully changed the version of %s to %s', $id, $version
+                )
+            );
+        }
+        $this->_redirect('*/*/view');
     }
 
     public function viewAction()
@@ -26,8 +45,8 @@ class Netzarbeiter_ModuleMgr_Adminhtml_Netzarbeiter_ModulemgrController
             $this->_initModule();
 
             $this->_title($this->__('System'))
-                    ->_title($this->__('Tools'))
-                    ->_title($this->__('Module Manager'));
+                ->_title($this->__('Tools'))
+                ->_title($this->__('Module Manager'));
 
             $this->loadLayout();
             $this->_setActiveMenu('system/tools/netzarbeiter_modulemgr');
@@ -38,7 +57,6 @@ class Netzarbeiter_ModuleMgr_Adminhtml_Netzarbeiter_ModulemgrController
             $this->_redirect('*/*/index');
         }
     }
-
 
     protected function _initModule()
     {

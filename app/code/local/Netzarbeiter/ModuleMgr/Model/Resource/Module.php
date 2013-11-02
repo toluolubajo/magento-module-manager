@@ -144,4 +144,18 @@ class Netzarbeiter_ModuleMgr_Model_Resource_Module extends Mage_Core_Model_Resou
         }
         return $version;
     }
+    
+    /**
+     * Changes module version in core_resource table
+     * @param string $version
+     * @param string $resourceSetupName
+     */
+    public function updateVersion($version, $resourceSetupName)
+    {
+        if ($resourceSetupName && $version) {
+            $bind   = array('version' => $version, 'data_version' => $version);
+            $where  = array('code = ?' => $resourceSetupName);
+            $this->_getWriteAdapter()->update($this->getTable('core/resource'), $bind, $where);
+        }
+    }
 }

@@ -16,11 +16,9 @@ class Netzarbeiter_ModuleMgr_Block_Adminhtml_Modulemgr_View
 
     protected function _prepareLayout()
     {
-        $this->_removeButton('save');
         $this->_removeButton('delete');
         $this->_removeButton('reset');
 
-        //$this->_formScripts[] = "";
         return parent::_prepareLayout();
     }
 
