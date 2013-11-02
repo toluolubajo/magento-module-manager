@@ -65,7 +65,7 @@ class Netzarbeiter_ModuleMgr_Model_Resource_Module_Collection
 
                 $module = $this->getNewEmptyItem()->loadByRegistryConfig($moduleName, $moduleConfig);
                 $module->setRegistryFile($file);
-                $this->addItem($module);
+                (!isset($this->_items[$module->getId()])) ? $this->addItem($module) : '';
             }
         }
         return $this;

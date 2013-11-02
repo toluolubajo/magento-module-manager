@@ -204,13 +204,18 @@ class Netzarbeiter_ModuleMgr_Model_Module extends Varien_Object
 
             /** @var SimpleXmlElement $setupResourceConfig */
             $setupResourceName = null;
-            $setupClass = null;
-            foreach ($xml->xpath('global/resources/*/setup/..') as $setupResourceConfig) {
-                $setupResourceName = $setupResourceConfig->getName();
-                $setupClass = (string) $setupResourceConfig->setup->class;
-                $setupClass = $setupClass ? $setupClass : 'Mage_Core_Model_Resource_Setup';
+            $setupClass             = null;
+            $setupResourceConfigs   = $xml->xpath('global/resources/*/setup/..');
+            if (empty($setupResourceConfigs)) {
+                return $this;
             }
-
+            
+            foreach ($setupResourceConfigs as $setupResourceConfig) {
+                $setupResourceName  = $setupResourceConfig->getName();
+                $setupClass         = (string) $setupResourceConfig->setup->class;
+                $setupClass         = $setupClass ? $setupClass : 'Mage_Core_Model_Resource_Setup';
+            }
+            
             $this->addData(array(
                 'version'                      => false === $version ? null : $version,
                 'model_class_group'            => $modelClassGroup,
