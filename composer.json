@@ -1,0 +1,9 @@
+{
+    "name": "toluolubajo/magento-modulemanager",
+    "type": "magento-module",
+    "description": "Magento Module Manager",
+    "homepage": "https://github.com/toluolubajo/magento-module-manager",
+    "require": {
+        "magento-hackathon/magento-composer-installer": "dev-master"
+    }
+}
